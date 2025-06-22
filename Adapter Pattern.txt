@@ -1,0 +1,62 @@
+// Target Interface
+interface PaymentProcessor {
+    void processPayment(String amount);
+}
+
+// Adaptee: PayPal Gateway
+class PayPalGateway {
+    public void makePayment(String amount) {
+        System.out.println("Processing PayPal payment of $" + amount);
+    }
+}
+
+// Adaptee: Stripe Gateway
+class StripeGateway {
+    public void payAmount(String amount) {
+        System.out.println("Processing Stripe payment of $" + amount);
+    }
+}
+
+// Adapter for PayPal
+class PayPalAdapter implements PaymentProcessor {
+    private final PayPalGateway payPal;
+
+    public PayPalAdapter(PayPalGateway payPal) {
+        this.payPal = payPal;
+    }
+
+    @Override
+    public void processPayment(String amount) {
+        payPal.makePayment(amount);
+    }
+}
+
+// Adapter for Stripe
+class StripeAdapter implements PaymentProcessor {
+    private final StripeGateway stripe;
+
+    public StripeAdapter(StripeGateway stripe) {
+        this.stripe = stripe;
+    }
+
+    @Override
+    public void processPayment(String amount) {
+        stripe.payAmount(amount);
+    }
+}
+
+// Main Class
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Adapter Pattern Example: Payment Processing\n");
+
+        // Using PayPal through the adapter
+        PaymentProcessor payPalProcessor = new PayPalAdapter(new PayPalGateway());
+        payPalProcessor.processPayment("100");
+
+        // Using Stripe through the adapter
+        PaymentProcessor stripeProcessor = new StripeAdapter(new StripeGateway());
+        stripeProcessor.processPayment("200");
+    }
+}
+

@@ -1,0 +1,120 @@
+// Document Interface
+interface Document {
+    void open();
+    void save();
+    void close();
+}
+
+// Word Document Implementation
+class WordDocument implements Document {
+    @Override
+    public void open() {
+        System.out.println("Opening Word Document...");
+    }
+
+    @Override
+    public void save() {
+        System.out.println("Saving Word Document...");
+    }
+
+    @Override
+    public void close() {
+        System.out.println("Closing Word Document...");
+    }
+}
+
+// PDF Document Implementation
+class PdfDocument implements Document {
+    @Override
+    public void open() {
+        System.out.println("Opening PDF Document...");
+    }
+
+    @Override
+    public void save() {
+        System.out.println("Saving PDF Document...");
+    }
+
+    @Override
+    public void close() {
+        System.out.println("Closing PDF Document...");
+    }
+}
+
+// Excel Document Implementation
+class ExcelDocument implements Document {
+    @Override
+    public void open() {
+        System.out.println("Opening Excel Document...");
+    }
+
+    @Override
+    public void save() {
+        System.out.println("Saving Excel Document...");
+    }
+
+    @Override
+    public void close() {
+        System.out.println("Closing Excel Document...");
+    }
+}
+
+// Abstract Document Factory
+abstract class DocumentFactory {
+    public abstract Document createDocument();
+
+    public void processDocument() {
+        Document doc = createDocument();
+        doc.open();
+        doc.save();
+        doc.close();
+    }
+}
+
+// Factory for Word Documents
+class WordDocumentFactory extends DocumentFactory {
+    @Override
+    public Document createDocument() {
+        return new WordDocument();
+    }
+}
+
+
+class PdfDocumentFactory extends DocumentFactory {
+    @Override
+    public Document createDocument() {
+        return new PdfDocument();
+    }
+}
+
+// Factory for Excel Documents
+class ExcelDocumentFactory extends DocumentFactory {
+    @Override
+    public Document createDocument() {
+        return new ExcelDocument();
+    }
+}
+
+// Main Class
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Factory Method Pattern Demo:\n");
+
+        // Create and process a Word Document
+        DocumentFactory wordFactory = new WordDocumentFactory();
+        System.out.println("Processing Word Document:");
+        wordFactory.processDocument();
+
+        // Create and process a PDF Document
+        DocumentFactory pdfFactory = new PdfDocumentFactory();
+        System.out.println("\nProcessing PDF Document:");
+        pdfFactory.processDocument();
+
+        // Create and process an Excel Document
+        DocumentFactory excelFactory = new ExcelDocumentFactory();
+        System.out.println("\nProcessing Excel Document:");
+        excelFactory.processDocument();
+    }
+}
+
+

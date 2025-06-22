@@ -1,0 +1,79 @@
+// Computer.java
+public class Computer {
+    // Attributes of the Computer
+    private final String CPU;
+    private final int RAM;
+    private final int storage;
+
+    // Private constructor
+    private Computer(Builder builder) {
+        this.CPU = builder.CPU;
+        this.RAM = builder.RAM;
+        this.storage = builder.storage;
+    }
+
+    // Static nested Builder class
+    public static class Builder {
+        private String CPU;
+        private int RAM;
+        private int storage;
+
+        // Setter methods for attributes
+        public Builder setCPU(String CPU) {
+            this.CPU = CPU;
+            return this;
+        }
+
+        public Builder setRAM(int RAM) {
+            this.RAM = RAM;
+            return this;
+        }
+
+        public Builder setStorage(int storage) {
+            this.storage = storage;
+            return this;
+        }
+
+        // Build method to create the Computer object
+        public Computer build() {
+            return new Computer(this);
+        }
+    }
+
+    // toString() method to display the configuration
+    @Override
+    public String toString() {
+        return "Computer [CPU=" + CPU + ", RAM=" + RAM + "GB, Storage=" + storage + "GB]";
+    }
+}
+
+// BuilderPatternExample.java
+public class BuilderPatternExample {
+    public static void main(String[] args) {
+        // Create a high-performance computer
+        Computer highPerformancePC = new Computer.Builder()
+                .setCPU("Intel i9")
+                .setRAM(32)
+                .setStorage(1024)
+                .build();
+
+        // Create a mid-range computer
+        Computer midRangePC = new Computer.Builder()
+                .setCPU("Intel i5")
+                .setRAM(16)
+                .setStorage(512)
+                .build();
+
+        // Create an entry-level computer
+        Computer entryLevelPC = new Computer.Builder()
+                .setCPU("Intel i3")
+                .setRAM(8)
+                .setStorage(256)
+                .build();
+
+        // Print the configurations
+        System.out.println("High-Performance PC: " + highPerformancePC);
+        System.out.println("Mid-Range PC: " + midRangePC);
+        System.out.println("Entry-Level PC: " + entryLevelPC);
+    }
+}

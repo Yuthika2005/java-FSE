@@ -1,0 +1,42 @@
+// CustomerRepository.java
+// Repository interface
+interface CustomerRepository {
+    String findCustomerById(int id);
+}
+
+// CustomerRepositoryImpl.java
+// Concrete repository implementation
+class CustomerRepositoryImpl implements CustomerRepository {
+    @Override
+    public String findCustomerById(int id) {
+        return "Customer{id=" + id + ", name='John Doe'}";
+    }
+}
+
+// CustomerService.java
+// Service class
+class CustomerService {
+    private final CustomerRepository repository;
+
+    public CustomerService(CustomerRepository repository) {
+        this.repository = repository;
+    }
+
+    public void getCustomerDetails(int id) {
+        String customer = repository.findCustomerById(id);
+        System.out.println(customer);
+    }
+}
+
+// Main.java
+// Test class
+public class Main {
+    public static void main(String[] args) {
+        CustomerRepository repository = new CustomerRepositoryImpl();
+        CustomerService service = new CustomerService(repository);
+
+        // Fetch customer details
+        service.getCustomerDetails(1);
+    }
+}
+

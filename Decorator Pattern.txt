@@ -1,0 +1,75 @@
+// Notifier.java
+// Component interface
+interface Notifier {
+    void send(String message);
+}
+
+// EmailNotifier.java
+// Concrete component that sends notifications via email
+class EmailNotifier implements Notifier {
+    @Override
+    public void send(String message) {
+        System.out.println("Sending Email Notification: " + message);
+    }
+}
+
+// NotifierDecorator.java
+// Base decorator class
+abstract class NotifierDecorator implements Notifier {
+    protected Notifier wrappedNotifier;
+
+    public NotifierDecorator(Notifier notifier) {
+        this.wrappedNotifier = notifier;
+    }
+
+    @Override
+    public void send(String message) {
+        wrappedNotifier.send(message);
+    }
+}
+
+// SMSNotifierDecorator.java
+// Decorator for SMS notifications
+class SMSNotifierDecorator extends NotifierDecorator {
+    public SMSNotifierDecorator(Notifier notifier) {
+        super(notifier);
+    }
+
+    @Override
+    public void send(String message) {
+        super.send(message);
+        System.out.println("Sending SMS Notification: " + message);
+    }
+}
+
+// SlackNotifierDecorator.java
+// Decorator for Slack notifications
+class SlackNotifierDecorator extends NotifierDecorator {
+    public SlackNotifierDecorator(Notifier notifier) {
+        super(notifier);
+    }
+
+    @Override
+    public void send(String message) {
+        super.send(message);
+        System.out.println("Sending Slack Notification: " + message);
+    }
+}
+
+// Main.java
+// Test class
+public class Main {
+    public static void main(String[] args) {
+        
+        Notifier emailNotifier = new EmailNotifier();
+
+      
+        Notifier smsNotifier = new SMSNotifierDecorator(emailNotifier);
+
+       
+        Notifier slackNotifier = new SlackNotifierDecorator(smsNotifier);
+
+       
+        slackNotifier.send("System maintenance scheduled at midnight.");
+    }
+}
